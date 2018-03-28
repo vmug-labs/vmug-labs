@@ -1,0 +1,15 @@
+#  Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# .tfvars files
+*.tfvars
+
+# Modules directory
+/modules
+
+# Excluded items
+_archive/
