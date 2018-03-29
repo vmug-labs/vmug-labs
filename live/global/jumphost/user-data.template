@@ -1,0 +1,30 @@
+<powershell>
+Set-ExecutionPolicy -ExecutionPolicy 'Bypass' -Scope 'Process' -Force
+
+# Create jump host user accounts
+$usernames = @()
+$password = 'VMware1!' |
+    ConvertTo-SecureString -AsPlainText -Force
+for ( $i = 1; $i -le 5; $i++ ) {
+    $username = 'vmug' + $i
+    $usernames += New-LocalUser -Name $username -Password $password
+}
+Add-LocalGroupMember -Name 'Remote Desktop Users' -Member $usernames
+
+# Install PowerShell Modules
+Install-PackageProvider -Name 'NuGet' -Force
+Set-PSRepository -Name 'PSGallery' -InstallationPolicy 'Trusted'
+foreach ( $module in 'VMware.PowerCLI' ) {
+    Install-Module -Name $module -Scope 'AllUsers' -Force
+}
+
+# Install Chocolatey
+$webClient = New-Object -TypeName 'System.Net.WebClient'
+$chocolateyInstallScript = $webClient.DownloadString( 'https://chocolatey.org/install.ps1' )
+Invoke-Expression -Command $chocolateyInstallScript
+
+# Install software packages
+foreach ( $package in 'git', 'VisualStudioCode', 'vscode-powershell', 'putty', 'GoogleChrome' ) {
+    choco.exe install -y $package
+}
+</powershell>
