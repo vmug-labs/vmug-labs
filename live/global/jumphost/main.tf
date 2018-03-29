@@ -1,10 +1,11 @@
 terraform {
   required_version = ">= 0.11, < 0.12"
-  backend          "s3"             {}
+
+  backend "s3" {}
 }
 
 provider "aws" {
-  version = "~> 1.12"
+  version = "~> 1.13"
   profile = "${var.aws_profile}"
   region  = "${var.aws_region}"
 }
@@ -34,7 +35,7 @@ resource "aws_security_group" "jumphost" {
   name = "jumphost"
 }
 
-resource "aws_security_group_rule" "allow_rdp_inbound" {
+resource "aws_security_group_rule" "allow_3389_tcp_inbound" {
   type              = "ingress"
   security_group_id = "${aws_security_group.jumphost.id}"
   from_port         = 3389
