@@ -6,18 +6,18 @@ Install-WindowsFeature -Name 'AD-Domain-Services', 'RSAT-ADDS'
 
 Import-Module -Name 'ADDSDeployment'
 
-$ntdsPath = Join-Path -Path $Env:windir -ChildPath 'NTDS'
-$sysvolPath = Join-Path -Path $Env:windir -ChildPath 'SYSVOL'
-$win2016 = 'WinThreshold'
+$ntdsPath = Join-Path -Path $Env:WinDir -ChildPath 'NTDS'
+$sysvolPath = Join-Path -Path $Env:WinDir -ChildPath 'SYSVOL'
+$functionalLevel = 'WinThreshold'
 $password = 'VMware1!' |
     ConvertTo-SecureString -AsPlainText -Force
 $splat = @{
     'CreateDnsDelegation'           = $false
     'DatabasePath'                  = $ntdsPath
-    'DomainMode'                    = $win2016
+    'DomainMode'                    = $functionalLevel
     'DomainName'                    = 'vmug-labs.local'
     'DomainNetbiosName'             = 'VMUGLABS'
-    'ForestMode'                    = $win2016
+    'ForestMode'                    = $functionalLevel
     'InstallDns'                    = $true
     'LogPath'                       = $ntdsPath
     'NoRebootOnCompletion'          = $false
