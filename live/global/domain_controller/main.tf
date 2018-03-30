@@ -39,15 +39,6 @@ data "aws_vpc" "vpc" {
   id = "${var.vpc_id}"
 }
 
-# data "aws_subnet_ids" "networks" {
-#   vpc_id = "${var.vpc_id}"
-# }
-
-# data "aws_subnet" "network" {
-#   count = "${length(data.aws_subnet_ids.networks.ids)}"
-#   id    = "${data.aws_subnet_ids.networks.ids[count.index]}"
-# }
-
 resource "aws_security_group_rule" "allow_25_tcp_inbound" {
   type              = "ingress"
   security_group_id = "${aws_security_group.domain_controller.id}"
