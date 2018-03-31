@@ -13,3 +13,4 @@
 
 # Excluded items
 _archive/
+*.pem
