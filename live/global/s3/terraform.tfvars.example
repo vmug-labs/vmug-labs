@@ -1,0 +1,13 @@
+# https://github.com/gruntwork-io/terragrunt/blob/master/README.md
+
+terragrunt = {
+  include {
+    path = "${find_in_parent_folders()}"
+  }
+}
+
+# aws_profile = "aws_iam_access_key_profile"
+
+# aws_region = "us-west-2"
+
+# aws_s3_bucket = "aws_s3_bucket"
