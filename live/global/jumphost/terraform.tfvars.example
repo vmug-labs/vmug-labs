@@ -8,10 +8,14 @@ terragrunt = {
 
 # aws_profile = "aws_iam_access_key_profile"
 
-aws_region = "us-west-2"
+
+# aws_region = "us-west-2"
+
 
 # instance_type = "t2.micro"
 
 
-# key_name = "aws_s3_ec2_key_name"
+# key_name = "aws_ec2_key_pair_name"
 
+
+# key_path = "../../../aws_ec2_key_pair_name.pem"

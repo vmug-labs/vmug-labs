@@ -8,7 +8,9 @@ terragrunt = {
 
 # aws_profile = "aws_iam_access_key_profile"
 
-aws_region = "us-west-2"
+
+# aws_region = "us-west-2"
+
 
 # instance_type = "t2.micro"
 
@@ -16,5 +18,7 @@ aws_region = "us-west-2"
 # key_name = "aws_s3_ec2_key_name"
 
 
-# vpc_id = "vpc-12345678"
+# key_path = "../../../aws_ec2_key_pair_name.pem"
 
+
+# vpc_id = "vpc-12345678"
