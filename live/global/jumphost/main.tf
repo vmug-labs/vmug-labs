@@ -42,6 +42,12 @@ data "terraform_remote_state" "domain_controller" {
 
 data "template_file" "user_data" {
   template = "${file("user-data.template")}"
+
+  vars {
+    domain_name          = "${data.terraform_remote_state.domain_controller.domain_name}"
+    domain_controller_ip = "${data.terraform_remote_state.domain_controller.private_ip}"
+    password             = "${data.terraform_remote_state.domain_controller.password}"
+  }
 }
 
 resource "aws_instance" "jumphost" {

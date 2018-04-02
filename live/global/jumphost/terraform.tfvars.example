@@ -4,12 +4,14 @@ terragrunt = {
   include {
     path = "${find_in_parent_folders()}"
   }
+
+  dependencies {
+    paths = [
+      "../s3",
+      "../vpc",
+      "../domain_controller",
+    ]
+  }
 }
 
 # instance_type = "t2.micro"
-
-
-# key_name = "aws_ec2_key_pair_name"
-
-
-# key_path = "../../../aws_ec2_key_pair_name.pem"

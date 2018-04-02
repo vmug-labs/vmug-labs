@@ -18,6 +18,10 @@ provider "template" {
   version = "~> 1.0"
 }
 
+provider "random" {
+  version = "~> 1.1"
+}
+
 data "terraform_remote_state" "vpc" {
   backend = "s3"
 
@@ -29,8 +33,27 @@ data "terraform_remote_state" "vpc" {
   }
 }
 
+resource "random_integer" "length" {
+  min = 16
+  max = 32
+}
+
+resource "random_string" "safe_mode_administrator_password" {
+  length  = "${random_integer.length.result}"
+  upper   = true
+  lower   = true
+  number  = true
+  special = true
+}
+
 data "template_file" "user_data" {
   template = "${file("user-data.template")}"
+
+  vars {
+    domain_name                      = "${var.domain_name}"
+    domain_netbios_name              = "${var.domain_netbios_name}"
+    safe_mode_administrator_password = "${random_string.safe_mode_administrator_password.result}"
+  }
   }
 
 resource "aws_instance" "domain_controller" {

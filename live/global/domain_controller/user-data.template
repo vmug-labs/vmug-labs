@@ -9,14 +9,14 @@ Import-Module -Name 'ADDSDeployment'
 $ntdsPath = Join-Path -Path $Env:WinDir -ChildPath 'NTDS'
 $sysvolPath = Join-Path -Path $Env:WinDir -ChildPath 'SYSVOL'
 $functionalLevel = 'WinThreshold'
-$password = 'VMware1!' |
+$password = '${safe_mode_administrator_password}' |
     ConvertTo-SecureString -AsPlainText -Force
 $splat = @{
     'CreateDnsDelegation'           = $false
     'DatabasePath'                  = $ntdsPath
     'DomainMode'                    = $functionalLevel
-    'DomainName'                    = 'vmug-labs.local'
-    'DomainNetbiosName'             = 'VMUGLABS'
+    'DomainName'                    = '${domain_name}'
+    'DomainNetbiosName'             = '${domain_netbios_name}'
     'ForestMode'                    = $functionalLevel
     'InstallDns'                    = $true
     'LogPath'                       = $ntdsPath

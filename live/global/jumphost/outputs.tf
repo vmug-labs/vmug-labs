@@ -2,6 +2,6 @@ output "public_dns" {
   value = "${aws_instance.jumphost.public_dns}"
 }
 
-output "base64-encoded_ec2-key-encrypted_password" {
-  value = "${aws_instance.jumphost.password_data}"
+output "password" {
+  value = "${rsadecrypt("${aws_instance.jumphost.password_data}", file("${module.global_variables.key_path}"))}"
 }

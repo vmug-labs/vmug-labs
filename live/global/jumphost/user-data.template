@@ -1,15 +1,19 @@
 <powershell>
 Set-ExecutionPolicy -ExecutionPolicy 'Bypass' -Scope 'Process' -Force
 
-# Create jump host user accounts
-$usernames = @()
-$password = 'VMware1!' |
+# Create domain credential
+$username = 'administrator@${domain_name}'
+$secureString = '${password}' |
     ConvertTo-SecureString -AsPlainText -Force
-for ( $i = 1; $i -le 5; $i++ ) {
-    $username = 'vmug' + $i
-    $usernames += New-LocalUser -Name $username -Password $password
+$splat = @{
+    'TypeName'     = 'System.Management.Automation.PSCredential'
+    'ArgumentList' = $username, $secureString
 }
-Add-LocalGroupMember -Name 'Remote Desktop Users' -Member $usernames
+$credential = New-Object @splat
+
+# Add the Active Directory domain controller as the primary DNS server
+Get-DnsClientServerAddress -InterfaceAlias 'Ethernet' -AddressFamily 'IPv4' |
+    Set-DnsClientServerAddress -ServerAddresses '${domain_controller_ip}'
 
 # Install PowerShell Modules
 Install-PackageProvider -Name 'NuGet' -Force
@@ -27,4 +31,7 @@ Invoke-Expression -Command $chocolateyInstallScript
 foreach ( $package in 'git', 'VisualStudioCode', 'vscode-powershell', 'putty', 'GoogleChrome' ) {
     choco.exe install -y $package
 }
+
+# Join domain
+Add-Computer -Credential $credential -DomainName '${domain_name}' -Restart -Force
 </powershell>
