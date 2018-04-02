@@ -6,12 +6,6 @@ terragrunt = {
   }
 }
 
-# aws_profile = "aws_iam_access_key_profile"
-
-
-# aws_region = "us-west-2"
-
-
 # instance_type = "t2.micro"
 
 

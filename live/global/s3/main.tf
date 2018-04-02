@@ -4,14 +4,18 @@ terraform {
   backend "s3" {}
 }
 
+module "global_variables" {
+  source = "../../../modules/global_variables"
+}
+
 provider "aws" {
   version = "~> 1.13"
-  profile = "${var.aws_profile}"
-  region  = "${var.aws_region}"
+  profile = "${module.global_variables.aws_profile}"
+  region  = "${module.global_variables.aws_region}"
 }
 
 resource "aws_s3_bucket" "terraform_state" {
-  bucket = "${var.aws_s3_bucket}"
+  bucket = "${module.global_variables.terrform_remote_state_s3_bucket}"
 
   versioning {
     enabled = true

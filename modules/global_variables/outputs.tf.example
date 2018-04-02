@@ -1,0 +1,27 @@
+output "aws_profile" {
+  value = "aws_profile"
+}
+
+output "aws_region" {
+  value = "us-west-2"
+}
+
+output "terrform_remote_state_s3_bucket" {
+  value = "aws_s3_bucket"
+}
+
+output "terrform_remote_state_vpc_key" {
+  value = "live/global/vpc/terraform.tfstate"
+}
+
+output "terrform_remote_state_domain_controller_key" {
+  value = "live/global/domain_controller/terraform.tfstate"
+}
+
+output "key_name" {
+  value = "ec2_public_key_name"
+}
+
+output "key_path" {
+  value = "../ec2_private_key.pem"
+}

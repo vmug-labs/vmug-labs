@@ -1,10 +1,6 @@
 variable "aws_profile" {
   description = "Specifies the AWS credential profile."
 }
-
-variable "aws_region" {
-  description = "Specifies the AWS region."
-  default     = "us-west-2"
 }
 
 variable "instance_type" {

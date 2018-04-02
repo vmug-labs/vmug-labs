@@ -8,9 +8,7 @@
 # .tfvars files
 *.tfvars
 
-# Modules directory
-/modules
-
 # Excluded items
 _archive/
 *.pem
+/modules/global_variables/outputs.tf
