@@ -51,7 +51,7 @@ data "template_file" "user_data" {
 }
 
 resource "aws_instance" "jumphost" {
-  ami                    = "ami-ef9a0e97"
+  ami                    = "${lookup(var.ami, module.global_variables.aws_region)}"
   instance_type          = "${var.instance_type}"
   key_name               = "${module.global_variables.key_name}"
   user_data              = "${data.template_file.user_data.rendered}"

@@ -54,10 +54,10 @@ data "template_file" "user_data" {
     domain_netbios_name              = "${var.domain_netbios_name}"
     safe_mode_administrator_password = "${random_string.safe_mode_administrator_password.result}"
   }
-  }
+}
 
 resource "aws_instance" "domain_controller" {
-  ami                    = "ami-ef9a0e97"
+  ami                    = "${lookup(var.ami, module.global_variables.aws_region)}"
   instance_type          = "${var.instance_type}"
   key_name               = "${module.global_variables.key_name}"
   user_data              = "${data.template_file.user_data.rendered}"

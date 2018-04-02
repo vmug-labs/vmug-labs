@@ -1,7 +1,7 @@
-variable "instance_type" {
-  description = "Specifies the AWS EC2 Instance Type."
-  default     = "t2.micro"
-}
+variable "ami" {
+  description = "Specifies the AWS EC2 Amazon Machine Image (AMI)."
+  type        = "map"
+
   default = {
     ap-northeast-1 = "ami-6ccf9d0a"
     ap-northeast-2 = "ami-ece04f82"
