@@ -27,6 +27,9 @@ $webClient = New-Object -TypeName 'System.Net.WebClient'
 $chocolateyInstallScript = $webClient.DownloadString( 'https://chocolatey.org/install.ps1' )
 Invoke-Expression -Command $chocolateyInstallScript
 
+# Install Active Directory & tools
+Install-WindowsFeature -Name 'RSAT-ADDS'
+
 # Install software packages
 foreach ( $package in 'git', 'VisualStudioCode', 'vscode-powershell', 'putty', 'GoogleChrome' ) {
     choco.exe install -y $package
