@@ -11,7 +11,7 @@ output "domain_name" {
 }
 
 output "domain_netbios_name" {
-  value = "${var.domain_name}"
+  value = "${var.domain_netbios_name}"
 }
 
 output "safe_mode_administrator_password" {
