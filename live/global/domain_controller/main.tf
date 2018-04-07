@@ -76,6 +76,7 @@ resource "aws_security_group" "domain_controller" {
 }
 
 resource "aws_security_group_rule" "allow_25_tcp_inbound" {
+  description       = "SMTP: Replication"
   type              = "ingress"
   security_group_id = "${aws_security_group.domain_controller.id}"
   from_port         = 25
@@ -85,6 +86,7 @@ resource "aws_security_group_rule" "allow_25_tcp_inbound" {
 }
 
 resource "aws_security_group_rule" "allow_53_tcp_inbound" {
+  description       = "DNS: User and Computer Authentication, Name Resolution, Trusts"
   type              = "ingress"
   security_group_id = "${aws_security_group.domain_controller.id}"
   from_port         = 53
@@ -94,6 +96,7 @@ resource "aws_security_group_rule" "allow_53_tcp_inbound" {
 }
 
 resource "aws_security_group_rule" "allow_53_udp_inbound" {
+  description       = "DNS: User and Computer Authentication, Name Resolution, Trusts"
   type              = "ingress"
   security_group_id = "${aws_security_group.domain_controller.id}"
   from_port         = 53
@@ -103,6 +106,7 @@ resource "aws_security_group_rule" "allow_53_udp_inbound" {
 }
 
 resource "aws_security_group_rule" "allow_88_tcp_inbound" {
+  description       = "Kerberos: User and Computer Authentication, Forest Level Trusts"
   type              = "ingress"
   security_group_id = "${aws_security_group.domain_controller.id}"
   from_port         = 88
@@ -112,6 +116,7 @@ resource "aws_security_group_rule" "allow_88_tcp_inbound" {
 }
 
 resource "aws_security_group_rule" "allow_88_udp_inbound" {
+  description       = "Kerberos: User and Computer Authentication, Forest Level Trusts"
   type              = "ingress"
   security_group_id = "${aws_security_group.domain_controller.id}"
   from_port         = 88
@@ -121,6 +126,7 @@ resource "aws_security_group_rule" "allow_88_udp_inbound" {
 }
 
 resource "aws_security_group_rule" "allow_123_udp_inbound" {
+  description       = "NTP: Windows Time, Trusts"
   type              = "ingress"
   security_group_id = "${aws_security_group.domain_controller.id}"
   from_port         = 123
@@ -130,6 +136,7 @@ resource "aws_security_group_rule" "allow_123_udp_inbound" {
 }
 
 resource "aws_security_group_rule" "allow_135_tcp_inbound" {
+  description       = "RPC, EPM: Replication"
   type              = "ingress"
   security_group_id = "${aws_security_group.domain_controller.id}"
   from_port         = 135
@@ -138,16 +145,28 @@ resource "aws_security_group_rule" "allow_135_tcp_inbound" {
   cidr_blocks       = ["${data.terraform_remote_state.vpc.cidr_block}"]
 }
 
-resource "aws_security_group_rule" "allow_137-138_udp_inbound" {
+resource "aws_security_group_rule" "allow_137_udp_inbound" {
+  description       = "NetLogon, NetBIOS Name Resolution: User and Computer Authentication"
   type              = "ingress"
   security_group_id = "${aws_security_group.domain_controller.id}"
   from_port         = 137
+  to_port           = 137
+  protocol          = "udp"
+  cidr_blocks       = ["${data.terraform_remote_state.vpc.cidr_block}"]
+}
+
+resource "aws_security_group_rule" "allow_138_udp_inbound" {
+  description       = "DFSN, NetLogon, NetBIOS Datagram Service: DFS, Group Policy"
+  type              = "ingress"
+  security_group_id = "${aws_security_group.domain_controller.id}"
+  from_port         = 138
   to_port           = 138
   protocol          = "udp"
   cidr_blocks       = ["${data.terraform_remote_state.vpc.cidr_block}"]
 }
 
 resource "aws_security_group_rule" "allow_139_tcp_inbound" {
+  description       = "DFSN, NetBIOS Session Service, NetLogon: User and Computer Authentication, Replication"
   type              = "ingress"
   security_group_id = "${aws_security_group.domain_controller.id}"
   from_port         = 139
@@ -157,6 +176,7 @@ resource "aws_security_group_rule" "allow_139_tcp_inbound" {
 }
 
 resource "aws_security_group_rule" "allow_389_tcp_inbound" {
+  description       = "LDAP: Directory, Replication, User and Computer Authentication, Group Policy, Trusts"
   type              = "ingress"
   security_group_id = "${aws_security_group.domain_controller.id}"
   from_port         = 389
@@ -166,6 +186,7 @@ resource "aws_security_group_rule" "allow_389_tcp_inbound" {
 }
 
 resource "aws_security_group_rule" "allow_389_udp_inbound" {
+  description       = "LDAP: Directory, Replication, User and Computer Authentication, Group Policy, Trusts"
   type              = "ingress"
   security_group_id = "${aws_security_group.domain_controller.id}"
   from_port         = 389
@@ -175,6 +196,7 @@ resource "aws_security_group_rule" "allow_389_udp_inbound" {
 }
 
 resource "aws_security_group_rule" "allow_445_tcp_inbound" {
+  description       = "SMB,CIFS,SMB2, DFSN, LSARPC, NbtSS, NetLogonR, SamR, SrvSvc: Replication, User and Computer Authentication, Group Policy, Trusts"
   type              = "ingress"
   security_group_id = "${aws_security_group.domain_controller.id}"
   from_port         = 445
@@ -184,6 +206,7 @@ resource "aws_security_group_rule" "allow_445_tcp_inbound" {
 }
 
 resource "aws_security_group_rule" "allow_445_udp_inbound" {
+  description       = "SMB,CIFS,SMB2, DFSN, LSARPC, NbtSS, NetLogonR, SamR, SrvSvc: Replication, User and Computer Authentication, Group Policy, Trusts"
   type              = "ingress"
   security_group_id = "${aws_security_group.domain_controller.id}"
   from_port         = 445
@@ -193,6 +216,7 @@ resource "aws_security_group_rule" "allow_445_udp_inbound" {
 }
 
 resource "aws_security_group_rule" "allow_464_tcp_inbound" {
+  description       = "Kerberos change/set password: Replication, User and Computer Authentication, Trusts"
   type              = "ingress"
   security_group_id = "${aws_security_group.domain_controller.id}"
   from_port         = 464
@@ -202,6 +226,7 @@ resource "aws_security_group_rule" "allow_464_tcp_inbound" {
 }
 
 resource "aws_security_group_rule" "allow_464_udp_inbound" {
+  description       = "Kerberos change/set password: Replication, User and Computer Authentication, Trusts"
   type              = "ingress"
   security_group_id = "${aws_security_group.domain_controller.id}"
   from_port         = 464
@@ -211,6 +236,7 @@ resource "aws_security_group_rule" "allow_464_udp_inbound" {
 }
 
 resource "aws_security_group_rule" "allow_636_tcp_inbound" {
+  description       = "LDAPS: Directory, Replication, User and Computer Authentication, Group Policy, Trusts"
   type              = "ingress"
   security_group_id = "${aws_security_group.domain_controller.id}"
   from_port         = 636
@@ -219,16 +245,28 @@ resource "aws_security_group_rule" "allow_636_tcp_inbound" {
   cidr_blocks       = ["${data.terraform_remote_state.vpc.cidr_block}"]
 }
 
-resource "aws_security_group_rule" "allow_3268-3269_tcp_inbound" {
+resource "aws_security_group_rule" "allow_3268_tcp_inbound" {
+  description       = "LDAP GC: Directory, Replication, User and Computer Authentication, Group Policy, Trusts"
   type              = "ingress"
   security_group_id = "${aws_security_group.domain_controller.id}"
   from_port         = 3268
+  to_port           = 3268
+  protocol          = "tcp"
+  cidr_blocks       = ["${data.terraform_remote_state.vpc.cidr_block}"]
+}
+
+resource "aws_security_group_rule" "allow_3269_tcp_inbound" {
+  description       = "LDAP GC SSL: Directory, Replication, User and Computer Authentication, Group Policy, Trusts"
+  type              = "ingress"
+  security_group_id = "${aws_security_group.domain_controller.id}"
+  from_port         = 3269
   to_port           = 3269
   protocol          = "tcp"
   cidr_blocks       = ["${data.terraform_remote_state.vpc.cidr_block}"]
 }
 
 resource "aws_security_group_rule" "allow_3389_tcp_inbound" {
+  description       = "RDP"
   type              = "ingress"
   security_group_id = "${aws_security_group.domain_controller.id}"
   from_port         = 3389
@@ -238,6 +276,7 @@ resource "aws_security_group_rule" "allow_3389_tcp_inbound" {
 }
 
 resource "aws_security_group_rule" "allow_5722_tcp_inbound" {
+  description       = "RPC, DFSR (SYSVOL): File Replication"
   type              = "ingress"
   security_group_id = "${aws_security_group.domain_controller.id}"
   from_port         = 5722
@@ -247,6 +286,7 @@ resource "aws_security_group_rule" "allow_5722_tcp_inbound" {
 }
 
 resource "aws_security_group_rule" "allow_9389_tcp_inbound" {
+  description       = "SOAP: AD DS Web Services"
   type              = "ingress"
   security_group_id = "${aws_security_group.domain_controller.id}"
   from_port         = 9389
@@ -256,6 +296,7 @@ resource "aws_security_group_rule" "allow_9389_tcp_inbound" {
 }
 
 resource "aws_security_group_rule" "allow_49152-65535_tcp_inbound" {
+  description       = "RPC, DCOM, EPM, DRSUAPI, NetLogonR, SamR, FRS: Replication, User and Computer Authentication, Group Policy, Trusts"
   type              = "ingress"
   security_group_id = "${aws_security_group.domain_controller.id}"
   from_port         = 49152
@@ -265,6 +306,7 @@ resource "aws_security_group_rule" "allow_49152-65535_tcp_inbound" {
 }
 
 resource "aws_security_group_rule" "allow_49152-65535_udp_inbound" {
+  description       = "DCOM, RPC, EPM: Group Policy"
   type              = "ingress"
   security_group_id = "${aws_security_group.domain_controller.id}"
   from_port         = 49152
@@ -274,6 +316,7 @@ resource "aws_security_group_rule" "allow_49152-65535_udp_inbound" {
 }
 
 resource "aws_security_group_rule" "allow_all_outbound" {
+  description       = "Allow all outbound"
   type              = "egress"
   security_group_id = "${aws_security_group.domain_controller.id}"
   from_port         = 0

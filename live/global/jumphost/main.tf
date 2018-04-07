@@ -69,6 +69,7 @@ resource "aws_security_group" "jumphost" {
 }
 
 resource "aws_security_group_rule" "allow_3389_tcp_inbound" {
+  description       = "RDP"
   type              = "ingress"
   security_group_id = "${aws_security_group.jumphost.id}"
   from_port         = 3389
@@ -78,6 +79,7 @@ resource "aws_security_group_rule" "allow_3389_tcp_inbound" {
 }
 
 resource "aws_security_group_rule" "allow_all_outbound" {
+  description       = "Allow all outbound"
   type              = "egress"
   security_group_id = "${aws_security_group.jumphost.id}"
   from_port         = 0
