@@ -59,7 +59,8 @@ resource "vsphere_virtual_machine" "vm" {
   num_cpus = 2
   memory   = 6144
 
-  wait_for_guest_net_timeout = 0
+  wait_for_guest_net_timeout = 5
+  wait_for_guest_net_routable = false
 
   network_interface {
     network_id = "${data.vsphere_network.network.id}"
