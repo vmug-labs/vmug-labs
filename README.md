@@ -41,4 +41,4 @@ This project is intended to automatically provision infrastructure for VMUG even
 * `terragrunt init`: This will initialize your environment, including: download all terraform modules necessary, create the S3 bucket for storing remote state, create the DynamoDB table for lock management.
 * `terragrunt plan`: This will analyze the state of your environment, and list what components need to be deployed, modified, and/or destroyed.
 * `terragrunt apply`: If approved, this will deploy the environment per your specifications.
-* `terragrunt destroy`: If approved, this will tear down the environment when your done.
+* `terragrunt destroy`: If approved, this will tear down the environment when you're done.
